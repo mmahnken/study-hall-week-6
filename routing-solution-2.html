@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>Google Maps Example</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-lYFqJZf7ZPYs8mQf-8QqbCs6mNw8pI&callback=initMap" async defer></script>
+        <style>
+              html, body {
+                height: 500px;
+                margin: 0;
+                padding: 0;
+              }
+              #my-map {
+                height: 100%;
+              }
+
+              span {
+                margin: 20px;
+                font-size: 20px;
+              }
+        </style>
+    </head>
+    <body>
+        <div id="my-map"></div>
+          <span class="fav-place" data-lat="37.8715926" data-lng="-122.272747" id="sauls">
+            Saul's Deli
+          </span>
+          <span class="fav-place" data-lat="37.761926" data-lng="-122.421510">
+            Taqueria El Buen Sabor
+          </span>
+          <span class="fav-place" data-lat="37.8043637" data-lng="-122.2711137">
+            Cato's Ale House
+          </span>
+
+
+        <script>
+          var map;
+          var marker;
+          var directionsService;
+          var directionsDisplay;
+
+          function initMap() {
+            map = new google.maps.Map(document.getElementById('my-map'), {
+              center: {lat: 37.7749295, lng: -122.4194155},
+              zoom: 11
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer;
+
+            directionsDisplay.setMap(map);
+
+          }
+
+          function getDirections(evt) {
+            var hackbrightLat = 37.788862;
+            var hackbrightLng = -122.411507;
+            var destinationLat = $(this).data('lat');
+            var destinationLng = $(this).data('lng');
+            debugger;
+
+            var request = {
+                origin: {lng: hackbrightLng, lat: hackbrightLat},
+                destination: {lng: Number(destinationLng), lat: Number(destinationLat)},
+                travelMode: google.maps.TravelMode["TRANSIT"]
+            };
+
+            directionsService.route(request, function(response, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+              }
+            });
+
+          }
+          $('.fav-place').on('click', getDirections);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Google Maps Example</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-lYFqJZf7ZPYs8mQf-8QqbCs6mNw8pI&callback=initMap" async defer></script>
+        <style>
+              html, body {
+                height: 500px;
+                margin: 0;
+                padding: 0;
+              }
+              #my-map {
+                height: 100%;
+              }
+
+              span {
+                margin: 20px;
+                font-size: 20px;
+              }
+        </style>
+    </head>
+    <body>
+        <div id="my-map"></div>
+          <span class="fav-place" data-lat="37.8715926" data-lng="-122.272747">
+            Saul's Deli
+          </span>
+          <span class="fav-place" data-lat="37.7749295" data-lng="-122.4194155">
+            Taqueria El Buen Sabor
+          </span>
+          <span class="fav-place" data-lat="37.8043637" data-lng="-122.2711137">
+            Cato's Ale House
+          </span>
+
+
+        <script>
+          var map;
+          var marker;
+
+          function initMap() {
+            map = new google.maps.Map(document.getElementById('my-map'), {
+              center: {lat: 37.7749295, lng: -122.4194155},
+              zoom: 11
+            });
+          }
+
+          function addMarkerToMap(evt) {
+            var latFromDom = $(this).data('lat');
+            var lngFromDom = $(this).data('lng');
+            var restaurantName = $(this).text();
+
+            var myLatLng = {lat: latFromDom, lng: lngFromDom};
+
+            // rebind marker to a new marker
+            marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: restaurantName
+              });
+          }
+          function clearMarker() {
+            marker.setMap(null);
+          }
+          $('.fav-place').on('mouseover', addMarkerToMap);
+          $('.fav-place').on('mouseout', clearMarker);
+
+        </script>
+    </body>
+</html>

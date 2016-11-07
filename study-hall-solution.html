@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Google Maps Example</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-lYFqJZf7ZPYs8mQf-8QqbCs6mNw8pI&callback=initMap" async defer></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+              }
+              #my-map {
+                height: 500px;
+              }
+        </style>
+    </head>
+    <body>
+        <div id="my-map"></div>
+        <span class="marker-me" data-lng="-122.411540" data-lat="37.788862">Hackbright Academy</span>
+        <span class="marker-me" data-lng="-122.429763" data-lat="37.680394">Arby's</span>
+        <script>
+            var map;
+            var marker;
+            function initMap(){
+                map = new google.maps.Map(
+                document.getElementById('my-map'), 
+                {
+                    center: {lat: 37.788862, lng: -122.411540},
+                    zoom: 13
+                });
+                
+
+            }
+            
+            function addMarker(evt){
+                var latFromDom = $(this).data('lat');
+                var lngFromDom = $(this).data('lng');
+                var myLatLng = {lng: Number(lngFromDom), lat: Number(latFromDom)};
+                marker = new google.maps.Marker(
+                        {
+                            position: myLatLng,
+                            map: map,
+                            title: 'Hello World!'
+                        }
+                );
+
+            }
+            function removeMarkers(evt){
+                marker.setMap(null);
+            }
+            $('.marker-me').on('mouseover', addMarker);
+
+            $('.marker-me').on('mouseout', removeMarkers);
+        </script>
+    </body>
+</html>

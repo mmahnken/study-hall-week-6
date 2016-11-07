@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Google Maps Example</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-lYFqJZf7ZPYs8mQf-8QqbCs6mNw8pI&callback=makeMeggiesMap" async defer></script>
+        <style>
+            #my-map {
+                height:200px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Hi, this is the profile page</h1>
+        <span id="latlong-info" data-lat="{{ latlong['lat'] }}" data-lng="{{ latlong['lng'] }}"></span>
+        <div id="my-map">
+        </div>
+    <script>
+        var thisMap;
+        function makeMeggiesMap(){
+            thisMap = new google.maps.Map(document.getElementById('my-map'), {   
+                    zoom: 10,
+                    center: {"lng":-122.411540, "lat":37.788862}
+                });
+
+            var lat = $('#latlong-info').data('lat');
+            var lng = $('#latlong-info').data('lng');
+
+            var marker = new google.maps.Marker({
+                position: {'lat': lat, 'lng': lng},
+                title: "Something",
+                map: thisMap,
+            });
+
+        }
+    </script>
+    </body>
+    
+</html>

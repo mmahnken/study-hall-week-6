@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Google Maps Example</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-lYFqJZf7ZPYs8mQf-8QqbCs6mNw8pI&callback=initMap" async defer></script>
+        <style>
+              html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+              }
+              #my-map {
+                height: 100%;
+              }
+        </style>
+    </head>
+    <body>
+        <div id="my-map"></div>
+        <script>
+          var map;
+          function initMap() {
+            map = new google.maps.Map(document.getElementById('my-map'), {
+              center: {lat: -34.397, lng: 150.644},
+              zoom: 8
+            });
+          }
+
+
+        </script>
+    </body>
+</html>

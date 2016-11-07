@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Google Maps Example</title>
+        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-lYFqJZf7ZPYs8mQf-8QqbCs6mNw8pI&callback=makeMeggiesMap" async defer></script>
+        <style>
+            #my-map {
+                height:200px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="my-map"></div>
+        Search for a restaurant
+        <input type="text" id="food">
+        <script>
+        function makeMeggiesMap(){
+            var thisMap = new google.maps.Map(document.getElementById('my-map'), 
+                {   
+                    zoom: 12,
+                    center: {lat:37, lng:-131}
+                });
+        }
+
+        function handleFoodEntry(evt){
+            var whatTheyTyped = $('#food').val();
+            // 2 alternative ways to get what the user typed:
+            // document.getElementById("#food").value
+            // evt.currentTarget.value
+
+            var url = '/find-lat-long?place_to_eat='+whatTheyTyped;
+            $.get(url, putMarkerOnMap);
+        }
+
+        $('#food').on('change', handleFoodEntry);
+        
+        </script>
+    </body>
+</html>
