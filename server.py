@@ -4,7 +4,8 @@ app = Flask(__name__)
 
 API_RESULTS = {
     "Arby's":  {"lng":-122.429763, "lat":37.680394},
-    "Hackbright":{"lng":-122.411540, "lat":37.788862}
+    "Hackbright":{"lng":-122.411540, "lat":37.788862},
+    "Barney's": {'lat': 37.8781148,'lng': -122.2693882}
 }
 
 @app.route("/")
@@ -18,12 +19,15 @@ def show_homepage():
 def find_lat_long():
     # get what the user typed
     user_val = request.args.get("place_to_eat")
+    print '\n\n\nHERE IS WHAT THE USER TYPED'
+    print user_val
+    print '********************\n\n\n\n\n'
     # use an api to find lat long
     something_found = API_RESULTS.get(user_val)
     if something_found:
         return jsonify({'result': something_found})    
     else:
-        return jsonify({'result': 'Your result was not found.'})
+        return jsonify({'result': 'Your result was not found.', 'meggie': 'is cool. :)'})
 
 @app.route("/profile/<place_name>")
 def show_profile(place_name):

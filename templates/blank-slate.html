@@ -10,28 +10,47 @@
         </style>
     </head>
     <body>
+        <h1>YOOOOOOOO</h1>
         <a href="/get-lat-long?food_to_eat={{something}}">Get food</a>
         <div id="my-map"></div>
         Search for a restaurant
         <input type="text" id="food">
         <script>
         var thisMap; 
-
+        var theFlaskResponse;
+        function registerListeners(thisMap){
+            thisMap.addListener('click', function(evt) {
+                // var latClicked = evt.latLng.lat();
+                // var lngClicked = evt.latLng.lng();
+                var marker = new google.maps.Marker(
+                        {
+                            position: evt.latLng,
+                            map: thisMap,
+                            title: 'Somewhere I clicked!'
+                        }
+                );
+            });
+        }
         function makeMeggiesMap(){
             thisMap = new google.maps.Map(document.getElementById('my-map'), 
                 {   
                     zoom: 10,
                     center: {"lng":-122.411540, "lat":37.788862}
                 });
+            registerListeners(thisMap);
 
         }
+        function addParagraph(someData){
+            $('body').append('<p>'+ someData.result+'</p>');
+        }
 
-        function putMarkerOnMap(resp){
-            if (resp.result === "Your result was not found."){
+        function putMarkerOnMap(whatFlaskReturned){
+            addParagraph(whatFlaskReturned);
+            if (whatFlaskReturned.result === "Your result was not found."){
                 alert("Sorry, no result found. :( ");
             } else {
-                var placeLat = resp.result.lat;
-                var placeLng = resp.result.lng;
+                var placeLat = whatFlaskReturned.result.lat;
+                var placeLng = whatFlaskReturned.result.lng;
                 var marker = new google.maps.Marker(
                         {
                             position: {'lat': placeLat, 'lng': placeLng},
@@ -43,12 +62,21 @@
             }
         }
 
+
+        // function handleClick(evt){
+        //    debugger;   
+        // }
+        // $('#my-map').on('click', handleClick);
+        
+
         function handleFoodEntry(evt){
+            debugger;
             var whatTheyTyped = $('#food').val();
             // 2 alternative ways to get what the user typed:
             // document.getElementById("#food").value
             // evt.currentTarget.value
             var url = '/find-lat-long?place_to_eat='+whatTheyTyped;
+            alert('Im about to send an AJAX GET request.');
             $.get(url, putMarkerOnMap);
 
         }
