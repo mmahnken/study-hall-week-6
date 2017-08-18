@@ -37,6 +37,10 @@ def show_profile(place_name):
     else:
         print "\n\n\nNOT FOUND!!\n\n\n"
         return render_template("blank-slate.html")
+
+@app.route('/todo')
+def show_todo_app():
+    return render_template('todo.html')
     
 
 if __name__ == "__main__":
